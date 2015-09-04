@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script type="text/jsx">
+"use strict";
+
+class Hello extends React.Component {  
+  render() {
+    return <h1>hello world</h1>;
+  }
+}
+React.render(<Hello />, document.body);
+
+    </script>
+  </body>
+</html>

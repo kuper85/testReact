@@ -1,0 +1,38 @@
+.panel {
+background-color: #fff;
+}
+.panel .panel-default {
+border: 1px solid gray;
+}
+.panel-default .panel-heading{
+height: 40px;
+background: #f5f5f5;
+border: 1px solid #ddd;
+}
+.panel-heading .multi-select {
+margin-left: 8px;
+position: relative;
+top: 10px;
+}
+.panel-heading .action-button {
+margin-left: 23px;
+position: relative;
+top: 8px;
+}
+.table {
+width: 100%;
+max-width: 100%;
+margin-bottom: 20px
+}
+.table tr {
+height: 40px;
+}
+.table tr>th {
+vertical-align: bottom;
+border-bottom: 2px solid #ddd;
+}
+.table tr>td  {
+vertical-align: middle;
+text-align: center;
+border-bottom: 2px solid #ddd;
+}

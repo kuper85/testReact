@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="build/react.js"></script>
+    <script src="build/JSXTransformer.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <script type="text/jsx">
+"use strict";
+
+class MultiSel extends React.Component{
+	render() {
+		return <input className="multi-select" type="checkbox" onClick={this.props.fnClick} ref="groupChangeCheckbox"/>
+	}
+};
+
+class MyButton extends React.Component{
+	btnHandler(){
+		let inputElems = document.querySelectorAll('th>input:checked');
+		let arr = [];
+		for(let i=0; i<inputElems.length;i++){
+		arr.push(inputElems[i].value);
+		}
+		console.log('ID\'s:',arr.join(','))
+		}
+	render() {
+		return <button className="btn btn-default action-button" type="submit"  onClick={this.btnHandler} >Show selected id's</button>
+	}
+};
+
+class Table extends React.Component {
+	constructor(props) {
+	    super(props);
+	    this.state = {checked: false};
+	    this.click = this.click.bind(this);
+  	}
+	click(){
+		this.setState({checked: !this.state.checked}) //это так, для примера. Хз что тут сделать чтоб все работало)
+	}
+	render() {
+		return <table className="table">
+				<thead>
+		        <tr>
+		            <th>#</th>
+		            <th>First Name</th>
+		            <th>Last Name</th>
+		            <th>Username</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <th scope="row"><input type="checkbox" value="1" checked={this.props.data[0].selected} onClick={this.props.change} /></th>
+		            <td>Mark</td>
+		            <td>Otto</td>
+		            <td>@mdo</td>
+		        </tr>
+		        <tr>
+		            <th scope="row"><input type="checkbox" value="2" checked={this.props.data[1].selected} onClick={this.props.change} /></th>
+		            <td>Jacob</td>
+		            <td>Thornton</td>
+		            <td>@fat</td>
+		        </tr>
+		        <tr>
+		            <th scope="row"><input type="checkbox" value="3" checked={this.props.data[2].selected} onClick={this.props.change} /></th>
+		            <td>Larry</td>
+		            <td>the Bird</td>
+		            <td>@twitter</td>
+		        </tr>
+		    </tbody>
+		       </table>;
+	}
+};
+
+class MainPanel extends React.Component {
+	constructor(props) {
+	    super(props);
+	    this.state = {
+			checkedAll: false,
+			data: [
+				{id:1, selected: false},
+				{id:2, selected: false},
+				{id:3, selected: false}
+			]
+	    };
+	    this.changeChecked = this.changeChecked.bind(this);
+	    this.changeCheckedAll = this.changeCheckedAll.bind(this);
+  	}
+	changeChecked(e) {
+		let id = e.target.getAttribute('value');
+		let state = this.state.data.map(function(d) {
+		    return {
+		        id: d.id,
+		        selected: (d.id == id ? !d.selected : d.selected)
+            	    };
+        	});
+
+        	this.setState({ data: state });
+	}
+	changeCheckedAll() {
+		this.setState({ checkedAll: !this.state.checkedAll }, (function(h){
+			let value = this.state.checkedAll;
+			let state = this.state.data.map(function(d) {
+            		return { id: d.id, selected: value };
+        		});
+			this.setState({ data: state });
+		}).bind(this));
+	}
+	render(){
+		return <div className="panel panel-default">
+		    	<div className="panel-heading">
+			  <MultiSel fnClick={this.changeCheckedAll} />
+			  <MyButton />
+			</div>
+			<div className="panel-body">
+			  <Table change={this.changeChecked} data={this.state.data} />
+			</div>
+		    </div>
+	}
+};
+
+React.render(<MainPanel />, document.body);
+
+    </script>
+  </body>
+</html>
